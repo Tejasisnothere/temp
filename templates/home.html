@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Model Selection - PharmaSense{% endblock %}
+{% block title %}Home - PharmaSense{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
 
 {% block content %}
 <section class="model-section">

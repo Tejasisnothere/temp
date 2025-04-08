@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}PharmaSense{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 
+    <!-- Default (Global) CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
 
+    <!-- Page-Specific CSS -->
+    {% block styles %}{% endblock %}
+
+    <!-- Default JavaScript -->
     <script src="{{ url_for('static', filename='home.js') }}"></script>
+
+    <!-- Page-Specific JavaScript -->
+    {% block scripts %}{% endblock %}
 </head>
 
 <body>
@@ -28,16 +37,14 @@
         </div>
     </header>
 
-
-
     <main>
         {% block content %}{% endblock %}
     </main>
 
-
     <footer>
         <p>&copy; 2025 PharmaSense. All rights reserved.</p>
     </footer>
+
 </body>
 
 </html>
