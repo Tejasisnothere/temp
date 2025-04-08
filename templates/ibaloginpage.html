@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Click Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2b2b2b);
+            color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        img.clicked {
+            border: 3px solid #4dd0e1;
+            transform: scale(1.1);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(to right, #ff00c8, #4f1b63);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #00fffb, #0072ff);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Click Images in Order</h1>
+    <div id="image-container"></div>
+    <button id="submit-order">Submit Order</button>
+
+    <script>
+        let clickedOrder = [];
+
+        async function fetchImages() {
+            const response = await fetch('/auth/get-images');
+            const data = await response.json();
+            displayImages(data.images);
+        }
+
+        function displayImages(images) {
+            const container = document.getElementById('image-container');
+            container.innerHTML = "";
+            images.forEach((url, index) => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.dataset.index = index;
+                img.addEventListener('click', () => handleClick(img, url));
+                container.appendChild(img);
+            });
+        }
+
+        function handleClick(img, url) {
+            if (!clickedOrder.includes(url)) {
+                clickedOrder.push(url);
+                img.classList.add("clicked");
+            }
+        }
+
+        document.getElementById('submit-order').addEventListener('click', async () => {
+            await fetch('/submit-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order: clickedOrder })
+            });
+            alert("Order submitted!");
+        });
+
+        fetchImages();
+    </script>
+</body>
+
+</html>

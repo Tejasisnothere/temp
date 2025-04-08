@@ -2,6 +2,10 @@
 
 {% block title %}Image Click Order{% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='ibasignup.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1>Click Images in Order</h1>
 <div id="image-container"></div>
@@ -11,7 +15,7 @@
     let clickedOrder = [];
 
     async function fetchImages() {
-        const response = await fetch('/get-images'); // Use relative URL for Flask
+        const response = await fetch('/get-images');
         const data = await response.json();
         displayImages(data.images);
     }

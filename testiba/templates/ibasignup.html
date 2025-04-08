@@ -3,47 +3,47 @@
 {% block title %}Image Click Order{% endblock %}
 
 {% block content %}
-    <h1>Click Images in Order</h1>
-    <div id="image-container"></div>
-    <button id="submit-order">Submit Order</button>
+<h1>Click Images in Order</h1>
+<div id="image-container"></div>
+<button id="submit-order">Submit Order</button>
 
-    <script>
-        let clickedOrder = [];
+<script>
+    let clickedOrder = [];
 
-        async function fetchImages() {
-            const response = await fetch('/get-images'); // Use relative URL for Flask
-            const data = await response.json();
-            displayImages(data.images);
-        }
+    async function fetchImages() {
+        const response = await fetch('/auth/get-images'); // Use relative URL for Flask
+        const data = await response.json();
+        displayImages(data.images);
+    }
 
-        function displayImages(images) {
-            const container = document.getElementById('image-container');
-            container.innerHTML = "";
-            images.forEach((url, index) => {
-                const img = document.createElement('img');
-                img.src = url;
-                img.dataset.index = index;
-                img.addEventListener('click', () => handleClick(img, url));
-                container.appendChild(img);
-            });
-        }
-
-        function handleClick(img, url) {
-            if (!clickedOrder.includes(url)) {
-                clickedOrder.push(url);
-                img.classList.add("clicked");
-            }
-        }
-
-        document.getElementById('submit-order').addEventListener('click', async () => {
-            await fetch('/submit-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ order: clickedOrder })
-            });
-            alert("Order submitted!");
+    function displayImages(images) {
+        const container = document.getElementById('image-container');
+        container.innerHTML = "";
+        images.forEach((url, index) => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.dataset.index = index;
+            img.addEventListener('click', () => handleClick(img, url));
+            container.appendChild(img);
         });
+    }
 
-        fetchImages();
-    </script>
+    function handleClick(img, url) {
+        if (!clickedOrder.includes(url)) {
+            clickedOrder.push(url);
+            img.classList.add("clicked");
+        }
+    }
+
+    document.getElementById('submit-order').addEventListener('click', async () => {
+        await fetch('/auth/submit-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order: clickedOrder })
+        });
+        alert("Order submitted!");
+    });
+
+    fetchImages();
+</script>
 {% endblock %}
