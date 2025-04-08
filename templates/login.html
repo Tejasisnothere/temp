@@ -2,46 +2,171 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmaSense - Login</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-    <script src="{{ url_for('static', filename='login.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4fef6;
+      color: #2e2e2e;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      border-color: #2e7d32;
+      outline: none;
+    }
+
+    .login-btn {
+      background-color: #2e7d32;
+      color: white;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #1b5e20;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background-color: #2e7d32;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-text {
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      opacity: 0.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #e0f2f1;
+      margin-top: 60px;
+      color: #4e4e4e;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="/" class="logo-text">PharmaSense</a>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/loginpage">Login</a></li>
-                    <li><a href="/signuppage">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <a href="/" class="logo-text">PharmaSense</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/loginpage">Login</a></li>
+        <li><a href="/signuppage">Sign Up</a></li>
+        <li><a href="/model">Predict</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <div class="card">
-            <div class="login-label">Login</div>
-            <form action="/userlogin" method="POST">
-                <label for="username">Enter Username:</label>
-                <input name="username" type="text" class="field">
-                <label for="password">Enter Password:</label>
-                <input name="password" type="password" class="field">
-                <button type="submit" class="login-button">LOGIN </button>
-            </form>
-        </div>
+  <div class="login-container">
+    <h2>Login to PharmaSense</h2>
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
 
-    </main>
+    <div class="signup-link">
+      Don’t have an account? <a href="/signuppage">Sign up here</a>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <footer>
+    &copy; 2025 PharmaSense. All rights reserved. Designed for pharmaceutical innovation and safety.
+  </footer>
+
 </body>
 
 </html>
