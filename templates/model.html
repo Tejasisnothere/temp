@@ -2,81 +2,227 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deviation Detection</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stress.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmaSense - Predict</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}">
+  <!-- Font Awesome CDN -->
+  <script src="https://kit.fontawesome.com/a2d9c8b6b6.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e8f5e9, #ffffff);
+      color: #2e2e2e;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1b5e20;
+      font-size: 2.7rem;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 2px #c8e6c9;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tabs button {
+      padding: 10px 24px;
+      border: none;
+      background-color: #dcedc8;
+      color: #33691e;
+      font-size: 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tabs button.active,
+    .tabs button:hover {
+      background-color: #33691e;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .input-method {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .input-method.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border: 1px solid #d0e8d0;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .input-group i {
+      color: #388e3c;
+      font-size: 1.1rem;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      flex: 1;
+      transition: border-color 0.3s;
+      background-color: #f7fdf7;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    input[type="file"]:focus {
+      border-color: #66bb6a;
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      background-color: #2e7d32;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #1b5e20;
+      transform: scale(1.02);
+    }
+  </style>
 </head>
 
 <body>
+  <h1>PharmaSense - Model Prediction</h1>
 
+  <div class="tabs">
+    <button class="tab-btn active" data-target="form-input">
+      <i class="fas fa-keyboard"></i> Form
+    </button>
+    <button class="tab-btn" data-target="comma-input">
+      <i class="fas fa-file-alt"></i> Comma-Separated
+    </button>
+    <button class="tab-btn" data-target="excel-input">
+      <i class="fas fa-file-excel"></i> Excel Upload
+    </button>
+  </div>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="/" class="logo-text">PharmaSense</a>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/loginpage">Login</a></li>
-                    <li><a href="/signuppage">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- Form Input -->
+  <div class="input-method active" id="form-input">
+    <form action="/predict" method="POST">
+      <label for="field1">Field 1</label>
+      <div class="input-group">
+        <i class="fas fa-vial"></i>
+        <input type="text" name="field1" required>
+      </div>
 
+      <label for="field2">Field 2</label>
+      <div class="input-group">
+        <i class="fas fa-capsules"></i>
+        <input type="text" name="field2" required>
+      </div>
 
-    <main>
-        <div class="container">
-            <h2>Deviation Detection Model</h2>
-            <form action="/stressinput" method="POST" class="form">
+      <!-- Add more fields as needed -->
 
-                <label for="A">A:</label>
-                <input type="text" name="A" id="A" step="any" required>
+      <button type="submit"><i class="fas fa-microscope"></i> Predict</button>
+    </form>
+  </div>
 
-                <label for="B">B:</label>
-                <input type="text" name="B" id="B" step="any" required>
+  <!-- Comma Separated Input -->
+  <div class="input-method" id="comma-input">
+    <form action="/predict_csv" method="POST">
+      <label for="csv_data">Enter comma-separated values</label>
+      <div class="input-group">
+        <i class="fas fa-stream"></i>
+        <textarea name="csv_data" rows="4" required placeholder="value1, value2, value3, ..."></textarea>
+      </div>
+      <button type="submit"><i class="fas fa-microscope"></i> Predict</button>
+    </form>
+  </div>
 
-                <label for="C">C:</label>
-                <input type="text" name="C" id="C" step="any" required>
+  <!-- Excel File Upload -->
+  <div class="input-method" id="excel-input">
+    <form action="/predict_excel" method="POST" enctype="multipart/form-data">
+      <label for="excel_file">Upload Excel File</label>
+      <div class="input-group">
+        <i class="fas fa-upload"></i>
+        <input type="file" name="excel_file" accept=".xls,.xlsx" required>
+      </div>
+      <button type="submit"><i class="fas fa-microscope"></i> Predict</button>
+    </form>
+  </div>
 
-                <label for="D">D:</label>
-                <input type="text" name="D" id="D" step="any" required>
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const inputMethods = document.querySelectorAll(".input-method");
 
-                <label for="E">E:</label>
-                <input type="text" name="E" id="E" step="any" required>
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        tabButtons.forEach(btn => btn.classList.remove("active"));
+        inputMethods.forEach(input => input.classList.remove("active"));
 
-                <label for="F">F:</label>
-                <input type="text" name="F" id="F" step="any" required>
-
-                <label for="G">G:</label>
-                <input type="text" name="G" id="G" step="any" required>
-
-                <label for="H">H:</label>
-                <input type="text" name="H" id="H" step="any" required>
-
-                <button type="submit">Predict Stress</button>
-            </form>
-        </div>
-
-        {% if prediction is defined or error is defined %}
-        <div class="predicted">
-            {% if prediction is defined %}
-            <p class="result">Predicted: {{ prediction }}</p>
-            {% endif %}
-            {% if error is defined %}
-            <p class="error">{{ error }}</p>
-            {% endif %}
-        </div>
-        {% endif %}
-    </main>
-
-
-    <footer>
-        <p>&copy; 2025 PharmaSense | All Rights Reserved</p>
-    </footer>
-
+        button.classList.add("active");
+        document.getElementById(button.dataset.target).classList.add("active");
+      });
+    });
+  </script>
 </body>
 
 </html>
