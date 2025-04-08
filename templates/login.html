@@ -1,47 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% block title %}Login - PharmaSense{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-    <script src="{{ url_for('static', filename='login.js') }}"></script>
-</head>
+{% block content %}
+<div class="card">
+    <div class="login-label">Login</div>
 
-<body>
+    <!-- Display Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="/" class="logo-text">PharmaSense</a>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/loginpage">Login</a></li>
-                    <li><a href="/signuppage">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <form action="{{ url_for('auth.login') }}" method="POST">
+        <label for="username">Enter Username:</label>
+        <input name="username" type="text" class="field" required>
 
-    <main>
-        <div class="card">
-            <div class="login-label">Login</div>
-            <form action="/userlogin" method="POST">
-                <label for="username">Enter Username:</label>
-                <input name="username" type="text" class="field">
-                <label for="password">Enter Password:</label>
-                <input name="password" type="password" class="field">
-                <button type="submit" class="login-button">LOGIN </button>
-            </form>
-        </div>
+        <label for="password">Enter Password:</label>
+        <input name="password" type="password" class="field" required>
 
-    </main>
-
-    <script src="script.js"></script>
-</body>
-
-</html>
+        <button type="submit" class="login-button">LOGIN</button>
+    </form>
+</div>
+{% endblock %}

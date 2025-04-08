@@ -1,13 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Hello, World!</h1>
-    <script src="script.js"></script>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Image Click Order{% endblock %}
+
+{% block content %}
+<h1>Click Images in Order</h1>
+<div id="image-container"></div>
+<button id="submit-order">Submit Order</button>
+
+<script>
+    let clickedOrder = [];
+
+    async function fetchImages() {
+        const response = await fetch('/get-images'); // Use relative URL for Flask
+        const data = await response.json();
+        displayImages(data.images);
+    }
+
+    function displayImages(images) {
+        const container = document.getElementById('image-container');
+        container.innerHTML = "";
+        images.forEach((url, index) => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.dataset.index = index;
+            img.addEventListener('click', () => handleClick(img, url));
+            container.appendChild(img);
+        });
+    }
+
+    function handleClick(img, url) {
+        if (!clickedOrder.includes(url)) {
+            clickedOrder.push(url);
+            img.classList.add("clicked");
+        }
+    }
+
+    document.getElementById('submit-order').addEventListener('click', async () => {
+        await fetch('/submit-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order: clickedOrder })
+        });
+        alert("Order submitted!");
+    });
+
+    fetchImages();
+</script>
+{% endblock %}

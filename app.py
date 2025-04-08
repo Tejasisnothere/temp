@@ -1,49 +1,22 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+from flask import flash
+from config import Config
+from models import db
+from routes.auth import auth
+from routes.home import home
 
 app = Flask(__name__)
+app.config.from_object(Config)
+app.secret_key = "supersecretkey"  # Required for flashing messages
 
-@app.route('/')
-def get_home_page():
-    return render_template("home.html")
+db.init_app(app)
 
-@app.route("/loginpage")
-def get_login_page():
-    return render_template("login.html")
+app.register_blueprint(auth, url_prefix="/auth")
+app.register_blueprint(home, url_prefix="/")
 
-@app.route("/signuppage")
-def get_signup_page():
-    return render_template("signup.html")
-
-@app.route("/model")
-def get_model_page():
-    return render_template("model.html")
-
-@app.route("/userlogin", methods=["POST"])
-def user_login():
-    try:
-        username = request.form.get("username")
-        password = request.form.get("password")
-        print(username, password )
-    except:
-        pass
-    finally:
-        return render_template("login.html")
-
-@app.route("/usersignup", methods=["POST"])
-def user_signup():
-    try:
-        username = request.form.get("username")
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
-
-        if(password1!=password2):
-            return render_template("signup.html", message="Password mismatch")
-        else:
-            print(username, password1, password2)
-            return render_template("login.html", message="User Created Successfully")
-    except:
-        pass
-
+with app.app_context():
+    db.create_all()
 
 if __name__ == "__main__":
     app.run(debug=True)
