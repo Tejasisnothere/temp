@@ -1,34 +1,113 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Login - PharmaSense{% endblock %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PharmaSense - Login</title>
 
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-{% endblock %}
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4fef6;
+            color: #2e2e2e;
+        }
 
-{% block content %}
-<div class="card">
-    <div class="login-label">Login</div>
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    <!-- Display Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-messages">
-        {% for category, message in messages %}
-        <div class="flash {{ category }}">{{ message }}</div>
-        {% endfor %}
+        .login-container h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
+
+        .login-btn {
+            background-color: #2e7d32;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login to PharmaSense</h2>
+
+        <form action="{{url_for('auth.login')}}" method="POST">
+            <div class="form-group">
+                <label for="username">Enter Username:</label>
+                <input name="username" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Enter Password:</label>
+                <input name="password" type="password" required>
+            </div>
+            <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+
+        <div class="signup-link">
+            Don’t have an account? <a href="{{ url_for('auth.signup_page') }}">Sign up here</a><br>
+            <a href="{{ url_for('home.home_page') }}" style="margin-top: 10px; display: inline-block;">← Back to
+                Home</a>
+        </div>
     </div>
-    {% endif %}
-    {% endwith %}
+</body>
 
-    <form action="{{ url_for('auth.login') }}" method="POST">
-        <label for="username">Enter Username:</label>
-        <input name="username" type="text" class="field" required>
-
-        <label for="password">Enter Password:</label>
-        <input name="password" type="password" class="field" required>
-
-        <button type="submit" class="login-button">LOGIN</button>
-    </form>
-</div>
-{% endblock %}
+</html>

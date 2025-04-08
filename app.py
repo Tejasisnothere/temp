@@ -6,6 +6,7 @@ from flask import flash
 from config import Config
 from routes.auth import auth
 from routes.home import home
+from routes.predictionmodel import predmodel
 import os
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ db.init_app(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(home, url_prefix="/")
+app.register_blueprint(predmodel, url_prefix="/model")
 
 with app.app_context():
     print("Creating database tables...")

@@ -1,26 +1,118 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Sign Up - PharmaSense{% endblock %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PharmaSense - Sign Up</title>
 
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
-{% endblock %}
+    <link rel="stylesheet" href="static/home.css">
+    <script src="static/home.js"></script>
 
-{% block content %}
-<div class="card">
-    <div class="signup-label">Sign Up</div>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4fef6;
+            color: #2e2e2e;
+        }
 
-    <form action="{{ url_for('auth.signup') }}" method="POST">
-        <label for="username">Enter Username:</label>
-        <input name="username" type="text" class="field" required>
+        .signup-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
 
-        <label for="password1">Enter Password:</label>
-        <input name="password1" type="password" class="field" required>
+        .signup-container h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 24px;
+        }
 
-        <label for="password2">Re-Enter Password:</label>
-        <input name="password2" type="password" class="field" required>
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-        <button type="submit" class="login-button">Sign Up</button>
-    </form>
-</div>
-{% endblock %}
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
+
+        .signup-btn {
+            background-color: #2e7d32;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form action="{{ url_for('auth.signup')}}" method="POST">
+            <div class="form-group">
+                <label for="username">Enter Username:</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <label for="password1">Enter Password:</label>
+                <input type="password" id="password1" name="password1" required />
+            </div>
+            <div class="form-group">
+                <label for="password2">Re-Enter Password:</label>
+                <input type="password" id="password2" name="password2" required />
+            </div>
+            <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="{{ url_for('auth.login_page')}}">Login here</a><br>
+            <a href="{{url_for('home.home_page')}}" style="margin-top: 10px; display: inline-block;">← Back to Home</a>
+        </div>
+    </div>
+</body>
+
+</html>
