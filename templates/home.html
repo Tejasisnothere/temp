@@ -2,39 +2,213 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model Selection</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    <script src="{{ url_for('static', filename='home.js') }}"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmaSense - Home</title>
+
+  <!-- External CSS & JS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
+
+  <!-- Internal CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4fef6;
+      color: #2e2e2e;
+    }
+
+    header {
+      background-color: #2e7d32;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(46, 125, 50, 0.85), rgba(46, 125, 50, 0.85)),
+        url('https://images.unsplash.com/photo-1588776814546-1ffcf47267b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 100px 30px;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero a {
+      background-color: white;
+      color: #2e7d32;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .hero a:hover {
+      background-color: #e8f5e9;
+    }
+
+    .section {
+      padding: 60px 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 32px;
+      color: #2e7d32;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .feature-card h3 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: #555;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .cta a {
+      background-color: #2e7d32;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta a:hover {
+      background-color: #1b5e20;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #e0f2f1;
+      margin-top: 60px;
+      color: #4e4e4e;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="/" class="logo-text">PharmaSense</a>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/loginpage">Login</a></li>
-                    <li><a href="/signuppage">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main>
-        <section class="model-section">
-            <h2>Select Prediction Model</h2>
-            <div class="button-grid">
-                <button onclick="location.href='/model'"> Deviation Detection </button>
-                <!-- <button onclick="location.href='/house'"> House Price Prediction </button>
-                <button onclick="location.href='/car-price'"> Car Price Prediction </button> -->
-            </div>
-        </section>
-    </main>
+  <header>
+    <a href="/" class="logo-text">PharmaSense</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/loginpage">Login</a></li>
+        <li><a href="/signuppage">Sign Up</a></li>
+        <li><a href="/model">Predict</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Empowering Safer Pharma with AI</h1>
+    <p>PharmaSense is your intelligent assistant for identifying anomalies in pharmaceutical processes. Our AI-driven platform detects deviations in manufacturing and testing data, ensuring quality and compliance.</p>
+    <a href="/model">Start Predicting</a>
+  </section>
+
+  <section class="section">
+    <h2>What We Do</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Deviation Detection</h3>
+        <p>Detect unusual patterns in pharma data using cutting-edge machine learning models tailored for the healthcare industry.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Data Integrity</h3>
+        <p>Ensure that all records are traceable and trustworthy — reducing errors and improving regulatory compliance.</p>
+      </div>
+      <div class="feature-card">
+        <h3>User-Friendly Interface</h3>
+        <p>Our platform is designed to be intuitive — no technical skills required. Just upload your data and go.</p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <p style="margin-bottom: 16px;">Join PharmaSense today and transform your pharma analytics.</p>
+      <a href="/signuppage">Create an Account</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 PharmaSense. All rights reserved. Designed for pharmaceutical innovation and safety.
+  </footer>
+
 </body>
 
 </html>
