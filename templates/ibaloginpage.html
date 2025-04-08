@@ -79,7 +79,7 @@
         let clickedOrder = [];
 
         async function fetchImages() {
-            const response = await fetch('/auth/get-images');
+            const response = await fetch('/auth/get-images-login');
             const data = await response.json();
             displayImages(data.images);
         }
@@ -104,7 +104,7 @@
         }
 
         document.getElementById('submit-order').addEventListener('click', async () => {
-            await fetch('/submit-order', {
+            await fetch('/auth/submit-order-login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order: clickedOrder })

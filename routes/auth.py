@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, session
 import random
 import hashlib
+from models import db  # Import db from models package
+from models.user import User  # Import User model
+from werkzeug.security import generate_password_hash, check_password_hash
+
 auth = Blueprint("auth", __name__)
 
 @auth.route("/loginpage", methods=["GET"])
@@ -11,18 +15,35 @@ def login_page():
 def signup_page():
     return render_template("signup.html")
 
+
+
+
+
 @auth.route("/login", methods=["POST"])
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    
-    if username == "admin" and password == "password":
-        
+    user = User.query.filter_by(username=username).first()
+
+    if user and check_password_hash(user.password_hash, password):
+        session["user_id"] = user.id
+        flash("Login successfull!", "success")
         return redirect(url_for("auth.iba_login_page"))
-    else:
-        flash("Invalid credentials. Try again.", "error")
-        return redirect(url_for("auth.login_page"))
+    
+    flash("Invalid creds.", "error")
+
+    return redirect(url_for("auth.login_page"))
+    # if username == "admin" and password == "password":
+        
+    #     return redirect(url_for("auth.iba_login_page"))
+    # else:
+    #     flash("Invalid credentials. Try again.", "error")
+    #     return redirect(url_for("auth.login_page"))
+
+
+
+
 
 @auth.route("/signup", methods=["POST"])
 def signup():
@@ -33,12 +54,25 @@ def signup():
     if password1 != password2:
         flash("Passwords do not match!", "error")
         return redirect(url_for("auth.signup_page"))
-    else:
-        print(username, password1)
+    
+    existing_user = User.query.filter_by(username=username).first()
 
+    if existing_user:
+        flash("Username already exists.")
+        return redirect(url_for("auth.signup_page"))
         
+    hashed_password = generate_password_hash(password1, method="pbkdf2:sha256")
+    new_user = User(username=username, password_hash = hashed_password)
 
-        return redirect(url_for("auth.iba_signup_page"))
+    db.session.add(new_user)
+    db.session.commit()
+
+    flash("Account created successfully!")
+    
+    return redirect(url_for("auth.iba_signup_page"))
+
+
+
 
 @auth.route("/ibasignuppage")
 def iba_signup_page():
@@ -54,13 +88,13 @@ def iba_login_page():
 # iba logic
 
 
-@auth.route('/get-images', methods=['GET'])
+@auth.route('/get-images-signup', methods=['GET'])
 def get_images():
     gen_imgs = generate_fixed_image_links(9)
     print(gen_imgs)
     return jsonify({"images": gen_imgs})
 
-@auth.route('/submit-order', methods=['POST'])
+@auth.route('/submit-order-signup', methods=['POST'])
 def submit_order():
     data = request.json
     print("Clicked Order:", data["order"])
