@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deviation Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stress.css') }}">
+</head>
+
+<body>
+
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/" class="logo-text">PharmaSense</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/loginpage">Login</a></li>
+                    <li><a href="/signuppage">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="container">
+            <h2>Deviation Detection Model</h2>
+            <form action="/stressinput" method="POST" class="form">
+
+                <label for="A">A:</label>
+                <input type="text" name="A" id="A" step="any" required>
+
+                <label for="B">B:</label>
+                <input type="text" name="B" id="B" step="any" required>
+
+                <label for="C">C:</label>
+                <input type="text" name="C" id="C" step="any" required>
+
+                <label for="D">D:</label>
+                <input type="text" name="D" id="D" step="any" required>
+
+                <label for="E">E:</label>
+                <input type="text" name="E" id="E" step="any" required>
+
+                <label for="F">F:</label>
+                <input type="text" name="F" id="F" step="any" required>
+
+                <label for="G">G:</label>
+                <input type="text" name="G" id="G" step="any" required>
+
+                <label for="H">H:</label>
+                <input type="text" name="H" id="H" step="any" required>
+
+                <button type="submit">Predict Stress</button>
+            </form>
+        </div>
+
+        {% if prediction is defined or error is defined %}
+        <div class="predicted">
+            {% if prediction is defined %}
+            <p class="result">Predicted: {{ prediction }}</p>
+            {% endif %}
+            {% if error is defined %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 PharmaSense | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>

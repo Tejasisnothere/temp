@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/" class="logo-text">PharmaSense</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/loginpage">Login</a></li>
+                    <li><a href="/signuppage">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="signup-label">Sign Up</div>
+            <form action="/usersignup" method="POST">
+                <label for="username">Enter Username:</label>
+                <input name="username" type="text" class="field">
+                <label for="password">Enter Password:</label>
+                <input name="password1" type="password" class="field">
+                <label for="password">Re-Enter Password:</label>
+                <input name="password2" type="password" class="field">
+                <button type="submit" class="login-button">Sign Up </button>
+            </form>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
