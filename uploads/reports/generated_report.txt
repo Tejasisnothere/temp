@@ -1,0 +1,43 @@
+Deviation Investigation Report
+
+1. Deviation Details
+
+Deviation PRID: PRID-20240409-001
+Site: ABC Pharma Pvt. Ltd.
+Location: Manufacturing Unit 3, Clean Room B
+Identified Date: 2025-04-05
+Opened Date: 2025-04-06
+Nature of Deviation: Temperature excursion in raw material storage
+
+2. Description
+
+A temperature excursion occurred in Clean Room B of Manufacturing Unit 3.  The temperature in the raw material storage area reached 28°C and remained at this level for six hours. The established storage temperature range for these materials is 15°C to 25°C.
+
+3. Immediate Actions Taken
+
+Upon identification of the temperature excursion, the HVAC system was restarted and the temperature was restored to the acceptable range.  All potentially impacted raw materials were quarantined pending quality assessment.
+
+4. Investigation
+
+The investigation included a thorough review of temperature logs, an assessment of HVAC system function, and an evaluation of the stability of the affected raw materials.
+
+5. Root Cause
+
+The investigation determined that the HVAC system malfunctioned due to clogged filters. This malfunction, coupled with a delay in responding to the temperature alert, ultimately led to the temperature excursion. The root cause of the delayed response was identified as inadequate HVAC maintenance stemming from the preventive maintenance schedule not being followed properly.
+
+
+6. Corrective and Preventive Actions (CAPA)
+
+Corrective Actions: The HVAC filters were replaced, the system was restarted, and temperature control within the storage area was revalidated.
+
+Preventive Actions: To prevent future occurrences, automated temperature alerts have been implemented.  The preventive maintenance schedule for the HVAC system has been revised, and adherence to the schedule will be closely monitored.
+
+
+7. Impact
+
+While there is no immediate risk to product quality, additional testing of the quarantined raw materials is required before the associated batch can be released. This will ensure the quality and efficacy of the final product.
+
+
+8. Conclusion
+
+The temperature excursion in the raw material storage area was caused by a combination of HVAC system malfunction and inadequate adherence to the preventive maintenance schedule. Corrective actions have been taken to address the immediate issue and preventive actions have been implemented to mitigate the risk of recurrence. Additional testing of impacted raw materials will be conducted to ensure product quality before batch release.  This deviation underscores the importance of adhering to established maintenance procedures and implementing robust monitoring systems.
