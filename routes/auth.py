@@ -67,6 +67,8 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
+    session["username"] = username
+
     flash("Account created successfully!")
     
     return redirect(url_for("auth.iba_signup_page"))
@@ -90,15 +92,36 @@ def iba_login_page():
 
 @auth.route('/get-images-signup', methods=['GET'])
 def get_images():
-    gen_imgs = generate_fixed_image_links(9)
+    gen_imgs = generate_fixed_image_links(6)
     print(gen_imgs)
     return jsonify({"images": gen_imgs})
 
 @auth.route('/submit-order-signup', methods=['POST'])
 def submit_order():
+
+    username = session.get("username")
     data = request.json
     print("Clicked Order:", data["order"])
+
+    clicked_order = data.get("order", [])
+
+    if not clicked_order:
+        return jsonify({"error": "No order data provided"}), 400
+    
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    iba_string = ",".join(clicked_order)
+    user.iba = iba_string
+    db.session.commit()
+    print("Iba String:", iba_string)    
+
+    
+
     return jsonify({"message": "Order received"}), 200
+
 
 def generate_fixed_image_links(n):
     links = []

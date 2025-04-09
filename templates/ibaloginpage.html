@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Click Order</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,67 +14,94 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2b2b2b);
-            color: #f2f2f2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4fef6;
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            color: #2e2e2e;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
         }
 
         h1 {
-            margin-bottom: 20px;
+            font-size: 24px;
+            color: #2e7d32;
+            margin-bottom: 30px;
         }
 
-        #image-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             justify-content: center;
+            margin-bottom: 30px;
         }
 
-        img {
-            width: 150px;
-            height: 150px;
+        .grid img {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
             object-fit: cover;
-            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
             cursor: pointer;
-            transition: transform 0.2s;
+            border: 3px solid transparent;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        img.clicked {
-            border: 3px solid #4dd0e1;
-            transform: scale(1.1);
+        .grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid img.selected {
+            border-color: #2e7d32;
+            box-shadow: 0 0 12px rgba(46, 125, 50, 0.6);
         }
 
         button {
-            margin-top: 20px;
-            padding: 12px 20px;
-            background: linear-gradient(to right, #ff00c8, #4f1b63);
-            color: white;
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 16px;
             border: none;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+            transition: background-color 0.3s ease;
+            width: 100%;
         }
 
         button:hover {
-            background: linear-gradient(to right, #00fffb, #0072ff);
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
+            background-color: #1b5e20;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #2e2e2e;
         }
     </style>
 </head>
 
 <body>
-    <h1>Click Images in Order</h1>
-    <div id="image-container"></div>
-    <button id="submit-order">Submit Order</button>
+    <div class="container">
+        <h1>Click Images in Order</h1>
+        <div class="grid" id="image-container"></div>
+        <button id="submit-order">Submit Order</button>
+        <div id="output"></div>
+    </div>
 
     <script>
         let clickedOrder = [];
@@ -99,7 +127,7 @@
         function handleClick(img, url) {
             if (!clickedOrder.includes(url)) {
                 clickedOrder.push(url);
-                img.classList.add("clicked");
+                img.classList.add("selected");  // Using "selected" class from first CSS
             }
         }
 
@@ -109,7 +137,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order: clickedOrder })
             });
-            alert("Order submitted!");
+            document.getElementById('output').textContent = "Order submitted!";
         });
 
         fetchImages();
