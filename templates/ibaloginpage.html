@@ -92,15 +92,32 @@
             font-weight: 500;
             color: #2e2e2e;
         }
+
+        .back-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .back-link a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Click Images in Order</h1>
+        <h1>Click to Save Images Order </h1>
         <div class="grid" id="image-container"></div>
         <button id="submit-order">Submit Order</button>
-        <div id="output"></div>
+        <div class="back-link">
+            <a href="/">← Back to Home</a>
+        </div>
     </div>
 
     <script>
@@ -127,7 +144,7 @@
         function handleClick(img, url) {
             if (!clickedOrder.includes(url)) {
                 clickedOrder.push(url);
-                img.classList.add("selected");  // Using "selected" class from first CSS
+                img.classList.add("selected");
             }
         }
 
@@ -137,7 +154,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order: clickedOrder })
             });
-            document.getElementById('output').textContent = "Order submitted!";
+            
         });
 
         fetchImages();
