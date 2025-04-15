@@ -2,39 +2,38 @@ Deviation Investigation Report
 
 1. Deviation Details
 
-Deviation PRID: 1345
-Site: B1
-Location: Park
-Identified Date: 2025-01-03
-Opened Date: 2025-01-03
-Nature: Equipment Failure
+Deviation PRID: PRID-20240409-006
+Site: BioPharma Inc.
+Location: Sterile Filling Area
+Deviation Identified Date: 2025-04-07
+Deviation Opened Date: 2025-04-08
 
 2. Description
 
-On January 3, 2025, a deviation was identified involving equipment temperature exceeding the established range of 25-30°C.  The equipment temperature reached 32°C.  Normal operating conditions dictate that the equipment temperature be maintained within the specified range.
+On April 7, 2025, a deviation occurred during aseptic processing in the Sterile Filling Area at BioPharma Inc. A small tear was observed in the glove of an operator performing aseptic manipulations.  This deviation compromises the required sterile barrier necessary for aseptic processing, potentially leading to microbial contamination of the product.
 
 3. Immediate Actions Taken
 
-Upon identification of the temperature excursion, the chilled water flow to the equipment was immediately increased to reduce the temperature.
+Upon identification of the glove breach, the filling line was immediately stopped. The affected batch was quarantined to prevent further processing or release until a thorough investigation could be conducted and appropriate disposition determined.
 
 4. Investigation
 
-The scope of the investigation included an inspection of the chilled water flow system supplying the affected equipment.  The investigation revealed a reduced chilled water flow due to a clogged chilled water line.
+The investigation included a comprehensive review of video monitoring footage of the filling operation and review of glove integrity test records for the affected operator.  The scope aimed to determine the precise sequence of events leading to the glove breach and identify any contributing factors.
 
 5. Root Cause
 
-The root cause of the reduced chilled water flow, and subsequent temperature deviation, was determined to be inadequate preventive maintenance procedures. The existing chilled water preventive maintenance procedure lacked a checkpoint for frequent inspection of the strainer, leading to clogging by particulates.
+The investigation revealed that the glove was punctured when the operator was handling materials required for the filling process.  Further analysis indicated that the operator did not adhere to the established Standard Operating Procedure (SOP) for material handling, which outlines the correct procedures for handling these materials in a manner that minimizes the risk of glove damage. The root cause was determined to be inadequate adherence to established procedures due to insufficient operator training on the specific material handling steps.
 
 6. Corrective and Preventive Actions (CAPA)
 
-Corrective Action: The chilled water preventive maintenance procedure for the affected equipment was updated to include a specific checkpoint for frequent strainer inspection and cleaning.  This will ensure timely removal of any particulate buildup and maintain adequate chilled water flow.
+Corrective Action: The existing SOP for material handling has been revised to include a detailed step-by-step guide with visual aids, clearly illustrating the correct method for handling materials to prevent glove damage.
 
-Preventive Action: To prevent similar occurrences in other systems, the corrective action was extended to all chilled water systems across all sites. All relevant procedures were updated to include the enhanced strainer inspection and cleaning requirements.
+Preventive Action: The affected batch is currently undergoing sterility testing to determine its suitability for release.  Production in the Sterile Filling Area resumed only after all operators involved in aseptic processing received retraining on the revised material handling SOP, including a practical demonstration of the correct technique.
 
 7. Impact
 
-The immediate impact of the deviation was minimal, as the temperature excursion to 32°C lasted only for three minutes.  The investigation confirmed no impact to the process or product quality.
+The potential impact of this deviation is considered minor. While a breach in the sterile barrier introduces a risk of microbial contamination, the immediate actions taken, including stopping the line and quarantining the affected batch, mitigated this risk. Preliminary results from the sterility testing have not indicated any compromise to product sterility. The full sterility test results are pending.
 
 8. Conclusion
 
-The deviation involving the equipment temperature excursion was successfully investigated and addressed.  The root cause was identified as an inadequate preventive maintenance procedure for the chilled water system. Corrective actions have been implemented to address the specific issue and preventive actions have been implemented to mitigate the risk of similar deviations occurring in other chilled water systems across all sites.  Based on the investigation and implemented CAPA, the deviation is considered closed.
+The glove breach incident highlights the critical importance of strict adherence to established SOPs during aseptic processing. The implemented corrective and preventive actions, including SOP revision and retraining, aim to strengthen procedural adherence and minimize the risk of similar deviations occurring in the future. The affected batch remains under quarantine pending final sterility testing results, after which a final disposition will be determined.  Continuous monitoring and reinforcement of aseptic techniques will be implemented to ensure ongoing compliance and maintain the integrity of sterile operations.

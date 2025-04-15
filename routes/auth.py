@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, session
 import random
 import hashlib
-from models import db  # Import db from models package
-from models.user import User  # Import User model
+from models import db
+from models.user import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from utils.decorators import login_required
 
 auth = Blueprint("auth", __name__)
 
@@ -24,22 +23,18 @@ def signup():
         return redirect(url_for("auth.signup_page"))
     
     existing_user = User.query.filter_by(username=username).first()
-
     if existing_user:
         flash("Username already exists.", "error")
         return redirect(url_for("auth.signup_page"))
 
     hashed_password = generate_password_hash(password1, method="pbkdf2:sha256")
     new_user = User(username=username, password_hash=hashed_password)
-
     db.session.add(new_user)
     db.session.commit()
 
-    session["username"] = username  # Store username in session
-
+    session["username"] = username  # ✅ Preserve session
     flash("Account created successfully! Now complete IBA signup.", "success")
-    
-    return redirect(url_for("auth.iba_signup_page"))  # Move to IBA signup
+    return redirect(url_for("auth.iba_signup_page"))
 
 # -------- IBA Signup -------- #
 @auth.route("/ibasignuppage", methods=["GET"])
@@ -51,7 +46,27 @@ def get_images():
     gen_imgs = generate_fixed_image_links(6)
     return jsonify({"images": gen_imgs})
 
+@auth.route('/submit-order-signup', methods=['POST'])
+def submit_order():
+    username = session.get("username")
+    if not username:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
 
+    data = request.json
+    clicked_order = data.get("order", [])
+    if not clicked_order:
+        return jsonify({"status": "error", "message": "No order data provided"}), 400
+
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"status": "error", "message": "User not found"}), 404
+
+    user.iba = ",".join(clicked_order)
+    db.session.commit()
+
+    return jsonify({"status": "success", "message": "IBA setup complete! Please log in."}), 200
+
+# -------- Login -------- #
 # -------- Login -------- #
 @auth.route("/loginpage", methods=["GET"])
 def login_page():
@@ -63,12 +78,12 @@ def login():
     password = request.form.get("password")
 
     user = User.query.filter_by(username=username).first()
-
     if user and check_password_hash(user.password_hash, password):
-        session["username"] = username
+        session["username"] = username  # Preserve session after successful login
+        session["authenticated"] = True  # Set authentication flag as True
         flash("Login successful! Now complete IBA login.", "success")
-        return redirect(url_for("auth.iba_login_page"))  # Move to IBA login
-    
+        return redirect(url_for("auth.iba_login_page"))
+
     flash("Invalid credentials.", "error")
     return redirect(url_for("auth.login_page"))
 
@@ -80,27 +95,23 @@ def iba_login_page():
 @auth.route('/get-images-login', methods=['GET'])
 def get_images_login():
     username = session.get("username")
-    
     if not username:
         return jsonify({"error": "User not logged in"}), 401
-    
+
     user = User.query.filter_by(username=username).first()
-    
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    new_images = generate_fixed_image_links(3)  # Generate 3 new images
-    user_iba = user.iba.split(",") if user.iba else []
-    user_iba.extend(new_images)
+    distractor_images = generate_fixed_image_links(3)
+    saved_iba = user.iba.split(",") if user.iba else []
+    full_list = saved_iba + distractor_images
+    random.shuffle(full_list)
 
-    random.shuffle(user_iba)  # Shuffle images
-
-    return jsonify({"images": user_iba})
+    return jsonify({"images": full_list})
 
 @auth.route('/submit-order-login', methods=['POST'])
 def submit_order_login():
     username = session.get("username")
-
     if not username:
         flash("Session expired. Please log in again.", "error")
         return redirect(url_for("auth.iba_login_page"))
@@ -109,24 +120,30 @@ def submit_order_login():
     clicked_order = data.get("order", [])
 
     if not clicked_order:
-        return jsonify({"error": "No order data provided"}), 400
+        return jsonify({"error": "No order submitted"}), 400
 
     user = User.query.filter_by(username=username).first()
-
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    iba_string = ",".join(clicked_order)
+    expected_order = user.iba.split(",") if user.iba else []
 
-    # Normalize comparison
-    if iba_string.strip() == user.iba.strip():
-        print("sucess")
-        return render_template("model.html")  # Final destination
+    if clicked_order == expected_order:
+        print("✅ IBA login success")
+        session["authenticated"] = True  # Optional: mark full auth
+        return render_template("model.html")
     else:
         flash("Invalid IBA Login. Try again.", "error")
         return redirect(url_for("auth.iba_login_page"))
 
-# -------- Image Generation Helper Function -------- #
+# -------- Logout -------- #
+@auth.route("/logout", methods=["GET"])
+def logout():
+    session.pop("username", None)
+    flash("Logged out successfully.", "success")
+    return redirect(url_for("auth.login_page"))
+
+# -------- Helper Function -------- #
 def generate_fixed_image_links(n):
     links = []
     for _ in range(n):
@@ -135,10 +152,3 @@ def generate_fixed_image_links(n):
         fixed_url = f"https://picsum.photos/seed/{unique_hash}/200"
         links.append(fixed_url)
     return links
-
-
-@auth.route("/logout", methods=["GET"])
-def logout():
-    session.pop("username", None)
-    flash("Logged out successfully.", "success")
-    return redirect(url_for("auth.login_page"))

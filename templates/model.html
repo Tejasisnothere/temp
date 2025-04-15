@@ -163,6 +163,40 @@
             flex-direction: column;
             z-index: 1000;
         }
+        /* Header Styling for Model Page */
+header {
+    background-color: #2e7d32;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .logo-text {
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+header nav ul.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+header nav ul.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    transition: opacity 0.3s ease;
+}
+
+header nav ul.nav-links li a:hover {
+    opacity: 0.8;
+}
+
 
         .spinner {
             width: 70px;
@@ -208,7 +242,22 @@
     </style>
 </head>
 
+
 <body>
+    <header>
+        <a href="{{ url_for('home.home_page') }}" class="logo-text">PharmaSense</a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home.home_page') }}">Home</a></li>
+                {% if session.get('username') %}
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login_page') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.signup_page') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
     <h1>PharmaSense - Model Prediction</h1>
 
     <!-- 🔄 Loading Overlay -->
