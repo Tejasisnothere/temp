@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Click Order</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBA Image Verification</title>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -107,14 +107,68 @@
         .back-link a:hover {
             text-decoration: underline;
         }
+
+        .success-msg {
+            margin-top: 20px;
+            padding: 16px;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .success-msg .home-link {
+            margin-left: 10px;
+            color: #1b5e20;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: all 0.3s ease;
+        }
+
+        .success-msg .home-link:hover {
+            border-color: #1b5e20;
+            text-decoration: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Click to Save Images Order </h1>
+        <h1>Click to Match the Correct Image Order</h1>
+
+        <!-- Flash messages from Flask -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         <div class="grid" id="image-container"></div>
         <button id="submit-order">Submit Order</button>
+
+        <div id="output"></div>
+        <div id="success-message" class="success-msg" style="display: none;">
+            ✅ Images matched correctly! <a href="/" class="home-link">Go to homepage →</a>
+        </div>
+
         <div class="back-link">
             <a href="/">← Back to Home</a>
         </div>
@@ -126,16 +180,16 @@
         async function fetchImages() {
             const response = await fetch('/auth/get-images-login');
             const data = await response.json();
+            clickedOrder = []; // Reset on refresh
             displayImages(data.images);
         }
 
         function displayImages(images) {
             const container = document.getElementById('image-container');
             container.innerHTML = "";
-            images.forEach((url, index) => {
+            images.forEach((url) => {
                 const img = document.createElement('img');
                 img.src = url;
-                img.dataset.index = index;
                 img.addEventListener('click', () => handleClick(img, url));
                 container.appendChild(img);
             });
@@ -149,12 +203,27 @@
         }
 
         document.getElementById('submit-order').addEventListener('click', async () => {
-            await fetch('/auth/submit-order-login', {
+            if (clickedOrder.length === 0) {
+                document.getElementById('output').textContent = "Please select at least one image.";
+                document.getElementById('success-message').style.display = "none";
+                return;
+            }
+
+            const response = await fetch('/auth/submit-order-login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order: clickedOrder })
             });
-            
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                document.getElementById('output').textContent = "";
+                document.getElementById('success-message').style.display = "block";
+            } else {
+                document.getElementById('success-message').style.display = "none";
+                document.getElementById('output').textContent = result.message || "Invalid order. Try again.";
+            }
         });
 
         fetchImages();

@@ -3,7 +3,7 @@ import pandas as pd
 from flask import Blueprint, request, jsonify, render_template, send_file
 from routes.aiml import generate_report
 from datetime import datetime
-
+from utils.decorators import login_required
 # Initialize Flask Blueprint
 predmodel = Blueprint("predmodel", __name__)
 
@@ -13,6 +13,7 @@ REPORT_FOLDER = os.path.join(UPLOAD_FOLDER, "reports")
 os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 @predmodel.route("/")
+@login_required
 def model_page():
     return render_template("model.html")
 

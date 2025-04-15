@@ -113,13 +113,20 @@
 <body>
     <div class="container">
         <h1>Click to Save Images Order </h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         <div class="grid" id="image-container"></div>
         <button id="submit-order">Submit Order</button>
         <div class="back-link">
             <a href="/">← Back to Home</a>
         </div>
     </div>
-
     <script>
         let clickedOrder = [];
 
@@ -149,16 +156,30 @@
         }
 
         document.getElementById('submit-order').addEventListener('click', async () => {
-            await fetch('/auth/submit-order-signup', {
+            if (clickedOrder.length === 0) {
+                alert("Please select at least one image.");
+                return;
+            }
+
+            const response = await fetch('/auth/submit-order-signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order: clickedOrder })
             });
 
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                alert(result.message);
+                window.location.href = '/auth/loginpage';
+            } else {
+                alert(result.message || 'Something went wrong.');
+            }
         });
 
         fetchImages();
     </script>
+
 </body>
 
 </html>

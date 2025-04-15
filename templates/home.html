@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PharmaSense - Home</title>
 
-    <!-- External CSS & JS -->  
-
     <!-- Internal CSS -->
     <style>
         * {
@@ -157,6 +155,31 @@
             color: #4e4e4e;
             font-size: 14px;
         }
+
+        .flashes {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        .flashes li {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .success {
+            background-color: #d0f0c0;
+            color: #2e7d32;
+        }
+
+        .error {
+            background-color: #ffcdd2;
+            color: #c62828;
+        }
     </style>
 </head>
 
@@ -167,11 +190,26 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="{{ url_for('home.home_page') }}">Home</a></li>
+                {% if session.get('username') %}
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                {% else %}
                 <li><a href="{{ url_for('auth.login_page') }}">Login</a></li>
                 <li><a href="{{ url_for('auth.signup_page') }}">Sign Up</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
+
+    <!-- Flash Message Section -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 
     <section class="hero">
         <h1>Empowering Safer Pharma with AI</h1>
@@ -179,7 +217,6 @@
             AI-driven platform detects deviations in manufacturing and testing data, ensuring quality and compliance.
         </p>
         <a href="#" onclick="location.href='/model/'">Start Predicting</a>
-
     </section>
 
     <section class="section">
@@ -207,6 +244,7 @@
             <a href="{{ url_for('auth.signup_page') }}">Create an Account</a>
         </div>
     </section>
+
     <footer>
         &copy; 2025 PharmaSense. All rights reserved. Designed for pharmaceutical innovation and safety.
     </footer>

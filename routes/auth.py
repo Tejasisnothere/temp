@@ -4,6 +4,7 @@ import hashlib
 from models import db  # Import db from models package
 from models.user import User  # Import User model
 from werkzeug.security import generate_password_hash, check_password_hash
+from utils.decorators import login_required
 
 auth = Blueprint("auth", __name__)
 
@@ -50,30 +51,6 @@ def get_images():
     gen_imgs = generate_fixed_image_links(6)
     return jsonify({"images": gen_imgs})
 
-@auth.route('/submit-order-signup', methods=['POST'])
-def submit_order():
-    username = session.get("username")
-    
-    if not username:
-        return jsonify({"error": "User not logged in"}), 401
-
-    data = request.json
-    clicked_order = data.get("order", [])
-
-    if not clicked_order:
-        return jsonify({"error": "No order data provided"}), 400
-    
-    user = User.query.filter_by(username=username).first()
-
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-    
-    iba_string = ",".join(clicked_order)
-    user.iba = iba_string
-    db.session.commit()
-
-    flash("IBA setup complete! Please log in.", "success")
-    return redirect(url_for("auth.login_page"))  # Move to login after IBA signup
 
 # -------- Login -------- #
 @auth.route("/loginpage", methods=["GET"])
@@ -158,3 +135,10 @@ def generate_fixed_image_links(n):
         fixed_url = f"https://picsum.photos/seed/{unique_hash}/200"
         links.append(fixed_url)
     return links
+
+
+@auth.route("/logout", methods=["GET"])
+def logout():
+    session.pop("username", None)
+    flash("Logged out successfully.", "success")
+    return redirect(url_for("auth.login_page"))

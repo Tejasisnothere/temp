@@ -2,44 +2,39 @@ Deviation Investigation Report
 
 1. Deviation Details
 
-Deviation PRID: PRID-20240409-001
-Site: ABC Pharma Pvt. Ltd.
-Location: Manufacturing Unit 3, Clean Room B
-Identified Date: 2025-04-05
-Opened Date: 2025-04-06
-Nature of Deviation: Temperature excursion in raw material storage
-
+Deviation PRID: 1345
+Site: B1
+Location: Park
+Identified Date: 2025-01-03
+Opened Date: 2025-01-03
+Nature: Equipment Failure
 
 2. Description
 
-On April 5, 2025, a temperature excursion occurred in Clean Room B of Manufacturing Unit 3.  The temperature reached 28°C and remained at this level for six hours, exceeding the defined storage temperature range of 15°C to 25°C.  This deviation was identified during routine temperature monitoring.
-
+On January 3, 2025, a deviation was identified involving equipment temperature exceeding the established range of 25-30°C.  The equipment temperature reached 32°C.  Normal operating conditions dictate that the equipment temperature be maintained within the specified range.
 
 3. Immediate Actions Taken
 
-Upon discovery of the temperature excursion, the HVAC system was restarted, and the temperature was restored to the acceptable range.  The potentially impacted raw materials were quarantined to prevent further processing until a quality assessment could be conducted.
-
+Upon identification of the temperature excursion, the chilled water flow to the equipment was immediately increased to reduce the temperature.
 
 4. Investigation
 
-The investigation scope included a comprehensive review of temperature logs, HVAC system functionality, and the stability of the potentially affected raw materials.  This involved analysis of historical temperature data, inspection of the HVAC system components, and assessment of the materials' compliance with stability specifications under the excursion conditions.
-
+The scope of the investigation included an inspection of the chilled water flow system supplying the affected equipment.  The investigation revealed a reduced chilled water flow due to a clogged chilled water line.
 
 5. Root Cause
 
-The investigation determined that the HVAC system malfunctioned due to clogged filters.  This malfunction contributed to the temperature excursion. Additionally, a delay in the response to the temperature alert exacerbated the duration of the excursion.  The root cause of these issues was determined to be inadequate adherence to the preventive maintenance schedule for the HVAC system.
-
+The root cause of the reduced chilled water flow, and subsequent temperature deviation, was determined to be inadequate preventive maintenance procedures. The existing chilled water preventive maintenance procedure lacked a checkpoint for frequent inspection of the strainer, leading to clogging by particulates.
 
 6. Corrective and Preventive Actions (CAPA)
 
-Corrective actions included replacing the HVAC filters, restarting the system, and revalidating temperature control within Clean Room B.  Preventive actions included implementing automated temperature alerts to provide immediate notification of excursions and revising the HVAC preventive maintenance schedule to ensure strict adherence and prevent recurrence of this issue.  This revised schedule includes more frequent filter changes and regular system inspections.
+Corrective Action: The chilled water preventive maintenance procedure for the affected equipment was updated to include a specific checkpoint for frequent strainer inspection and cleaning.  This will ensure timely removal of any particulate buildup and maintain adequate chilled water flow.
 
+Preventive Action: To prevent similar occurrences in other systems, the corrective action was extended to all chilled water systems across all sites. All relevant procedures were updated to include the enhanced strainer inspection and cleaning requirements.
 
 7. Impact
 
-The initial assessment suggests no immediate risk to product quality. However, as a precautionary measure, additional testing of the quarantined raw materials will be required before batch release can be authorized.  This additional testing will confirm the materials' continued suitability for use.
-
+The immediate impact of the deviation was minimal, as the temperature excursion to 32°C lasted only for three minutes.  The investigation confirmed no impact to the process or product quality.
 
 8. Conclusion
 
-The temperature excursion in Clean Room B was successfully addressed through immediate actions and a thorough investigation. The root cause, inadequate adherence to the preventive maintenance schedule, has been identified and addressed through corrective and preventive actions.  While no immediate risk to product quality is anticipated, additional testing of the impacted raw materials will be conducted to ensure patient safety and product quality.  The implemented CAPA are designed to prevent similar deviations from occurring in the future.
+The deviation involving the equipment temperature excursion was successfully investigated and addressed.  The root cause was identified as an inadequate preventive maintenance procedure for the chilled water system. Corrective actions have been implemented to address the specific issue and preventive actions have been implemented to mitigate the risk of similar deviations occurring in other chilled water systems across all sites.  Based on the investigation and implemented CAPA, the deviation is considered closed.

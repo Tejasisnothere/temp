@@ -26,7 +26,8 @@ with app.app_context():
         print(f"Database path: {app.config['SQLALCHEMY_DATABASE_URI']}")
         db.create_all()
         # Check if tables exist
-        tables = db.engine.table_names()
+        tables = db.metadata.tables.keys()
+
         print(f"Tables in database: {tables}")
         # Check if any users exist
         users_count = User.query.count()
@@ -35,3 +36,6 @@ with app.app_context():
     except Exception as e:
         print(f"Error creating database: {e}")
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
